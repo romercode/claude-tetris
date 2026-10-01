@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="dark" data-skin="retro">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,6 +34,10 @@
           <span class="label">LEVEL</span>
           <span class="value" id="level">1</span>
         </div>
+        <div class="panel-section">
+          <span class="label">COMBO</span>
+          <span class="value" id="combo">0</span>
+        </div>
 
         <div class="panel-section">
           <span class="label">NEXT</span>
@@ -54,14 +58,120 @@
     </div>
 
     <div id="overlay" class="overlay hidden">
-      <div class="overlay-box">
-        <p id="overlay-title">GAME OVER</p>
-        <p id="overlay-score"></p>
-        <button id="restart-btn">Reiniciar</button>
+      <!-- ================= PANTALLA DE INICIO ================= -->
+      <div class="overlay-box screen" id="screen-start">
+        <p class="screen__title">TETRIS</p>
+        <p class="screen__hint">Elige tu apariencia y pulsa Jugar para empezar.</p>
+
+        <label class="field">
+          <span class="field__label">Apariencia</span>
+          <select data-skin-select></select>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Nivel inicial</span>
+          <select data-level-select></select>
+        </label>
+
+        <div class="records">
+          <p class="records__title">Mejores puntuaciones</p>
+          <table class="records__table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Puntos</th>
+                <th>Líne.</th>
+                <th>Combo</th>
+              </tr>
+            </thead>
+            <tbody data-records-body></tbody>
+          </table>
+          <p class="records__empty" data-records-empty>Sin records todavía. ¡Sé el primero!</p>
+          <button type="button" class="btn btn--ghost" data-records-reset>Resetear records</button>
+        </div>
+
+        <button type="button" class="btn" id="btn-play">Jugar</button>
+      </div>
+
+      <!-- ================= MENÚ DE PAUSA ================= -->
+      <div class="overlay-box screen hidden" id="screen-pause">
+        <p class="screen__title screen__title--pause">PAUSA</p>
+
+        <button type="button" class="btn" id="btn-resume">Reanudar</button>
+        <button type="button" class="btn btn--ghost" id="btn-restart">Reiniciar</button>
+        <button type="button" class="btn btn--ghost" id="btn-pause-controls" aria-expanded="false" aria-controls="pause-controls-list">Ver controles</button>
+
+        <ul class="controls-list" id="pause-controls-list" hidden>
+          <li><kbd>←</kbd><kbd>→</kbd> mover</li>
+          <li><kbd>↓</kbd> bajar</li>
+          <li><kbd>↑</kbd><kbd>X</kbd> rotar</li>
+          <li><kbd>Space</kbd> caída rápida</li>
+          <li><kbd>P</kbd><kbd>Esc</kbd> pausa</li>
+        </ul>
+
+        <label class="field">
+          <span class="field__label">Nivel inicial (próxima partida)</span>
+          <select data-level-select></select>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Apariencia</span>
+          <select data-skin-select></select>
+        </label>
+
+        <p class="screen__hint">Pulsa <kbd>P</kbd> o <kbd>Esc</kbd> para reanudar.</p>
+      </div>
+
+      <!-- ================= GAME OVER ================= -->
+      <div class="overlay-box screen hidden" id="screen-over">
+        <p class="screen__title">GAME OVER</p>
+        <p class="screen__score">Puntuación: <span id="final-score">0</span></p>
+
+        <div class="final-stats">
+          <span>Nivel <b id="final-level">1</b></span>
+          <span>Líneas <b id="final-lines">0</b></span>
+          <span>Mejor combo <b id="final-combo">0</b></span>
+          <span>Líne. seguidas <b id="final-max-lines">0</b></span>
+        </div>
+
+        <label class="field">
+          <span class="field__label">Tu nombre</span>
+          <input type="text" id="player-name" maxlength="12" placeholder="Jugador" autocomplete="off" />
+        </label>
+
+        <button type="button" class="btn" id="btn-save-score">Guardar record</button>
+
+        <div class="records">
+          <p class="records__title">Mejores puntuaciones</p>
+          <table class="records__table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Puntos</th>
+                <th>Líne.</th>
+                <th>Combo</th>
+              </tr>
+            </thead>
+            <tbody data-records-body></tbody>
+          </table>
+          <p class="records__empty" data-records-empty>Sin records todavía. ¡Sé el primero!</p>
+          <button type="button" class="btn btn--ghost" data-records-reset>Resetear records</button>
+        </div>
+
+        <div class="screen__actions">
+          <button type="button" class="btn" id="btn-restart-over">Reiniciar</button>
+          <button type="button" class="btn btn--ghost" id="btn-menu">Menú principal</button>
+        </div>
       </div>
     </div>
   </div>
 
   <script src="game.js"></script>
+  <script src="skins.js"></script>
+  <script src="records.js"></script>
+  <script src="menu.js"></script>
+  <script>Tetris.boot();</script>
 </body>
 </html>
