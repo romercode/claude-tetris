@@ -429,8 +429,10 @@ function draw() {
 
   if (Tetris.state.gameOver || !piece) return;
 
+  /* El nucleo expone la misma prueba de colision, asi que el ghost no puede
+     discrepar de la pieza real. */
   let ghost = piece.y;
-  while (!collideFor(piece.shape, piece.x, ghost + 1)) ghost++;
+  while (!Tetris.collide(piece.shape, piece.x, ghost + 1)) ghost++;
 
   for (let r = 0; r < piece.shape.length; r++)
     for (let c = 0; c < piece.shape[r].length; c++)
@@ -441,21 +443,6 @@ function draw() {
     for (let c = 0; c < piece.shape[r].length; c++)
       if (piece.shape[r][c])
         drawBlock(ctx, piece.x + c, piece.y + r, piece.shape[r][c], BLOCK, 1, true);
-}
-
-/* El nucleo no expone collide(); el skin necesita la misma prueba para el ghost. */
-function collideFor(shape, ox, oy) {
-  const cells = Tetris.board;
-  for (let r = 0; r < shape.length; r++) {
-    for (let c = 0; c < shape[r].length; c++) {
-      if (!shape[r][c]) continue;
-      const nx = ox + c;
-      const ny = oy + r;
-      if (nx < 0 || nx >= COLS || ny >= ROWS) return true;
-      if (ny >= 0 && cells[ny][nx]) return true;
-    }
-  }
-  return false;
 }
 
 const NEXT_BLOCK = 30;

@@ -309,6 +309,12 @@ kbd {
   display: none !important;
 }
 
+/* Necesario porque varias reglas de este fichero usan display: flex/grid, que
+   ganan a la regla [hidden] del user agent. */
+[hidden] {
+  display: none !important;
+}
+
 .overlay-box {
   text-align: center;
   color: var(--overlay-text);
@@ -532,6 +538,12 @@ kbd {
 .records__empty {
   font-size: 11px;
   color: var(--muted);
+}
+
+.records__status {
+  font-size: 11px;
+  color: var(--value);
+  min-height: 1em;
 }
 
 /* ---- Resumen de la partida al terminar ---- */

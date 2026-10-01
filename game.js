@@ -551,4 +551,7 @@ window.Tetris = {
   togglePause,
   setInitialLevel,
   readInitialLevel,
+
+  // nucleo reutilizable
+  collide,
 };
